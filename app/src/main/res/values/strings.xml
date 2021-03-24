@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Pc Builder</string>
+    <string name="navigation_drawer_open">Nav open</string>
+    <string name="navigation_drawer_close">Nav close</string>
+</resources>

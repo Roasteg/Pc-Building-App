@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.pcbuilder.pcbuilder.HomeFragment"
+        android:label="Components"
+        android:tag="home"
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+
+        android:name="com.pcbuilder.pcbuilder.CartFragment"
+        android:label="Cart"
+        tools:layout="@layout/cart_fragment"
+        />
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="com.pcbuilder.pcbuilder.ItemFragment"
+        android:label="Item"
+        tools:layout="@layout/item_fragment" >
+        <argument
+            android:name="partname"
+            app:argType="string" />
+        <argument android:name="partprice"
+            app:argType="string" />
+        <argument
+            android:name="partimg"
+            app:argType="string" />
+    </fragment>
+</navigation>
