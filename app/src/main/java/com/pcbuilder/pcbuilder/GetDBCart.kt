@@ -7,20 +7,21 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import java.io.*
 
-class GetDB internal constructor(private val myContext: Context) :
+class GetDBCart internal constructor(private val myContext: Context) :
     SQLiteOpenHelper(myContext, DB_NAME, null, SCHEMA) {
     override fun onCreate(db: SQLiteDatabase?) {}
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {}
 
     companion object {
         private var DB_PATH: String? = null
-        private const val DB_NAME = "components.db"
-        private const val SCHEMA = 10
-        var TABLE: String = "cpu"
-        var COLUMN_NAME: String = TABLE.plus("_Name")
-        var COLUMN_PRICE: String = TABLE.plus("_Price")
-        var COLUMN_SOCKET: String = TABLE.plus("_Socket")
-        var COLUMN_IMG : String = "img"
+        private const val DB_NAME = "cart.db"
+        private const val SCHEMA = 4
+        var TABLE: String = "new_cart"
+        var COLUMN_NAME: String = "item_Name"
+        var COLUMN_PRICE_NEW: String = "item_Price_New"
+        var COLUMN_PRICE_STOCK: String = "item_Price_New"
+        var COLUMN_QUANTITY: String = "item_Quantity"
+        var COLUMN_CATEGORY: String = "item_Category"
         const val COLUMN_ID = "_id"
     }
 

@@ -34,5 +34,9 @@
         <argument
             android:name="partimg"
             app:argType="string" />
+        <argument
+            android:name="partsocket"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

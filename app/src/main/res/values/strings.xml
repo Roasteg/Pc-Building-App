@@ -2,4 +2,6 @@
     <string name="app_name">Pc Builder</string>
     <string name="navigation_drawer_open">Nav open</string>
     <string name="navigation_drawer_close">Nav close</string>
+    <string name="addedToCart">Item added</string>
+    <string name="itemInCart">Item with the same category is already in the cart</string>
 </resources>

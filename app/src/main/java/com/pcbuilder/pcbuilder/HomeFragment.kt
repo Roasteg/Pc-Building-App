@@ -19,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache
 import com.nostra13.universalimageloader.core.DisplayImageOptions
@@ -55,14 +56,14 @@ class HomeFragment : Fragment(R.layout.home_fragment),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         drawer = activity?.findViewById(R.id.drawer_layout)
-        var toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(
+        val toggle: ActionBarDrawerToggle = ActionBarDrawerToggle(
             activity, drawer, toolbar, R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
 
         drawer!!.addDrawerListener(toggle)
         toggle.syncState()
-        var navigaion: NavigationView = requireActivity().findViewById(R.id.navigation_view)
+        val navigaion: NavigationView = requireActivity().findViewById(R.id.navigation_view)
 
         navigaion.setNavigationItemSelectedListener(this)
     }
@@ -82,9 +83,10 @@ class HomeFragment : Fragment(R.layout.home_fragment),
         compList!!.setOnItemClickListener { parent, view, position, id ->
             var name = view.findViewById<TextView>(R.id.cName).text.toString()
             var price = view.findViewById<TextView>(R.id.cPrice).text.toString()
+            var socket = view.findViewById<TextView>(R.id.cSocket).text.toString()
             additInfo(name)
             val action = HomeFragmentDirections.actionHomeFragmentToItemFragment(name, price,
-                imgInfo.toString())
+                imgInfo.toString(), socket)
             findNavController().navigate(action)
         }
         return view
@@ -97,19 +99,15 @@ class HomeFragment : Fragment(R.layout.home_fragment),
     fun refreshDb() {
         db = dbGetter!!.open()
         compCursor = db!!.rawQuery("SELECT * FROM " + GetDB.TABLE, null)
-        var headers = arrayOf(GetDB.COLUMN_NAME, GetDB.COLUMN_PRICE)
+        var headers = arrayOf(GetDB.COLUMN_NAME, GetDB.COLUMN_PRICE, GetDB.COLUMN_SOCKET)
         compAdapter = SimpleCursorAdapter(
             this.context,
             R.layout.list_adapter_view,
             compCursor,
             headers,
-            intArrayOf(R.id.cName, R.id.cPrice),
+            intArrayOf(R.id.cName, R.id.cPrice, R.id.cSocket),
             0
         )
-
-
-
-
         compAdapter!!.notifyDataSetChanged()
         compList!!.deferNotifyDataSetChanged()
         compList!!.adapter = compAdapter
@@ -140,6 +138,7 @@ class HomeFragment : Fragment(R.layout.home_fragment),
         GetDB.TABLE = item.titleCondensed.toString()
         GetDB.COLUMN_NAME = GetDB.TABLE.plus("_Name")
         GetDB.COLUMN_PRICE = GetDB.TABLE.plus("_Price")
+        GetDB.COLUMN_SOCKET = GetDB.TABLE.plus("_Socket")
         refreshDb()
         drawer!!.closeDrawer(GravityCompat.START)
         return true
