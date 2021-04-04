@@ -20,6 +20,7 @@
         android:name="com.pcbuilder.pcbuilder.CartFragment"
         android:label="Cart"
         tools:layout="@layout/cart_fragment"
+        android:tag="cart"
         />
     <fragment
         android:id="@+id/itemFragment"

@@ -30,7 +30,7 @@ class ItemFragment : Fragment(R.layout.item_fragment) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view: View = inflater.inflate(R.layout.item_fragment, container, false)
 
         dbGetter = GetDBCart(activity?.applicationContext!!)
@@ -40,7 +40,7 @@ class ItemFragment : Fragment(R.layout.item_fragment) {
         addToCart!!.setOnClickListener {
             addToCart(
                 args.partname, args.partprice,
-                args.partsocket.toString(), view
+                args.partsocket.toString(), GetDB.TABLE, GetDBCart.TABLE, view
             )
         }
         return view
@@ -57,21 +57,25 @@ class ItemFragment : Fragment(R.layout.item_fragment) {
     }
 
 
-    fun addToCart(name: String, price: String, socket: String, view: View) {
+    private fun addToCart(
+        name: String,
+        price: String,
+        socket: String,
+        table: String,
+        tableCart: String,
+        view: View
+    ) {
+
         db = dbGetter!!.open()
-        var check: Cursor = db!!.rawQuery(
-            "SELECT * FROM " + GetDBCart.TABLE + " WHERE item_Category = " + "'".plus(GetDB.TABLE)
-                .plus("'"), null
+        val check: Cursor = db!!.rawQuery(
+            "SELECT * FROM $tableCart WHERE item_Category = '$table'", null
         )
-        if (check != null && check.count>0) {
+        if (check.count > 0) {
             Snackbar.make(view, R.string.itemInCart, Snackbar.LENGTH_SHORT).show()
             check.close()
         } else {
             db!!.execSQL(
-                "INSERT INTO new_cart(item_Price_New, item_Name, item_Quantity, item_Socket, item_Stock_Price, item_Category) " +
-                        "VALUES(" + "'".plus(price).plus("',") + "'".plus(name)
-                    .plus("',") + "1," + "'".plus(socket).plus("',") + "'".plus(price)
-                    .plus("',") + "'".plus(GetDB.TABLE).plus("'") + ")"
+                "INSERT INTO new_cart(item_Price_New, item_Name, item_Quantity, item_Socket, item_Stock_Price, item_Category) VALUES ('$price', '$name', '1', '$socket', '$price', '$table')"
             )
             Snackbar.make(view, R.string.addedToCart, Snackbar.LENGTH_SHORT).show()
 
