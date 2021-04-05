@@ -15,7 +15,7 @@ class GetDBCart internal constructor(private val myContext: Context) :
     companion object {
         private var DB_PATH: String? = null
         private const val DB_NAME = "cart.db"
-        private const val SCHEMA = 4
+        private const val SCHEMA = 9
         var TABLE: String = "new_cart"
         var COLUMN_NAME: String = "item_Name"
         var COLUMN_PRICE_NEW: String = "item_Price_New"
